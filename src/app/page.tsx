@@ -1,7 +1,10 @@
+import Landing from "./components/landing/Landing";
 
 
 export default function Home() {
   return (
-  <div className="  text-white h-screen ">dw</div>
+  <div className="">
+    <Landing />
+  </div>
   );
 }
