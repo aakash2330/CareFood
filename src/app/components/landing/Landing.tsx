@@ -4,7 +4,7 @@ import LandingText from "./LandingText"
 
 function Landing() {
   return (
-    <div className="ml-10 mt-4 lg:mt-0  pt-[10%] flex md:flex-row  flex-col lg:mr-96 ">
+    <div className="ml-10 mt-4 lg:mt-0  pt-[10%] flex md:flex-row  flex-col lg:mr-72 ">
       <LandingText />
       <LandingImage />
     </div>
