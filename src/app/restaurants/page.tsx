@@ -1,4 +1,5 @@
-import Body from "./components/body"
+import Body from "./components/Body"
+
 
 
 function page() {
