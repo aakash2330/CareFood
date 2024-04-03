@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils";
 import { Github, Instagram, Linkedin } from "lucide-react";
 import Image, { StaticImageData } from "next/image";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 export const InfiniteMovingCards = ({
@@ -17,6 +18,9 @@ export const InfiniteMovingCards = ({
     name: string;
     title: string;
     image: StaticImageData;
+    githubLink : string;
+    instagramLink : string;
+    linkedInLink : string;
   }[];
   direction?: "left" | "right";
   speed?: "fast" | "normal" | "slow";
@@ -116,9 +120,24 @@ export const InfiniteMovingCards = ({
               <div className="text-slate-800 font-medium text-sm mt-1">
                 {item.title}
               </div>
-              <div className="flex gap-x-4  mt-7"> 
-                <div className="p-2 border   text-gray-700 gap-2 flex items-center rounded-full text-[1.15rem] focus:scale-[1.10] hover:scale-[1.10] hover:text-gray-950 active:scale-105 transition  border-black/10"><Linkedin className="h-5 w-5" /></div>
-                <div className="p-2 border   text-gray-700 gap-2 flex items-center rounded-full text-[1.15rem] focus:scale-[1.10] hover:scale-[1.10] hover:text-gray-950 active:scale-105 transition  border-black/10"><Github className="h-5 w-5" /></div>       <div className="p-2 border   text-gray-700 gap-2 flex items-center rounded-full text-[1.15rem] focus:scale-[1.10] hover:scale-[1.10] hover:text-gray-950 active:scale-105 transition  border-black/10"><Instagram className="h-5 w-5" /></div>
+              <div className="flex gap-x-4  mt-7">
+                <Link
+                  href={item.linkedInLink}
+                  target="_blank"
+                  className="p-2 border   text-gray-700 gap-2 flex items-center rounded-full text-[1.15rem] focus:scale-[1.10] hover:scale-[1.10] hover:text-gray-950 active:scale-105 transition  border-black/10"
+                >
+                  <Linkedin className="h-5 w-5" />
+                </Link>
+                <Link
+                  href={item.githubLink}
+                  target="_blank"
+                  className="p-2 border   text-gray-700 gap-2 flex items-center rounded-full text-[1.15rem] focus:scale-[1.10] hover:scale-[1.10] hover:text-gray-950 active:scale-105 transition  border-black/10"
+                >
+                  <Github className="h-5 w-5" />
+                </Link>{" "}
+                <Link href={item.instagramLink} target="_blank" className="p-2 border   text-gray-700 gap-2 flex items-center rounded-full text-[1.15rem] focus:scale-[1.10] hover:scale-[1.10] hover:text-gray-950 active:scale-105 transition  border-black/10">
+                  <Instagram className="h-5 w-5" />
+                </Link>
               </div>
             </div>
           </li>
