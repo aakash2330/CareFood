@@ -2,6 +2,7 @@ import Image from "next/image";
 import pizza from "../../../../public/pizza.png";
 import heart from "../../../../public/heart.jpeg";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 function LandingText() {
   return (
@@ -28,8 +29,8 @@ function LandingText() {
         in need—all in one platform.
       </div>
       <div className="flex gap-x-5  mt-9">
-        <button className="text-[#5F5F5F] font-semibold text-base lg:text-xl bg-[#7afd64] lg:bg-transparent  hover:bg-[#7afd64] hover:text-white rounded-xl px-2 py-1">Order Now!</button>
-        <button className=" bg-[#38DB4A]  hover:bg-[#7afd64] px-4 py-2 text-[#F6F6F6] font-semibold text-xl flex gap-x-1 rounded-xl">Try it out <ArrowRight className="w-6 h-5 mt-1"/></button>
+        <Link href="/restaurants" className="text-[#5F5F5F] font-semibold text-base lg:text-xl bg-[#7afd64] lg:bg-transparent  hover:bg-[#7afd64] hover:text-white rounded-xl px-2 py-2">Order Now!</Link>
+        <Link href="/restaurants" className=" bg-[#38DB4A]  hover:bg-[#7afd64] px-4 py-2 text-[#F6F6F6] font-semibold text-xl flex gap-x-1 rounded-xl">Try it out <ArrowRight className="w-6 h-5 mt-1"/></Link>
       </div>
     </div>
     </div>
