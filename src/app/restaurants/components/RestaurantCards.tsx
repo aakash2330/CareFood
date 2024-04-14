@@ -10,7 +10,8 @@ function RestaurantCards({
 
   <div className={`flex bg-[#FCFCFC] gap-x-4 px-4 py-10 cursor-pointer lg:gap-x-10  w-[580px]    items-center shadow-xl rounded-xl my-4  transition ease-in-out delay-75 hover:scale-105 duration-200 ${searchInput == "" ? "xl:w-5/12" : "xl:w-12/12"}`}>
     <div>
-      <img src={ "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/" +
+      {/* e0839ff574213e6f35b3899ebf1fc597 */}
+      <img src={ "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/" +
           restaurant?.info.cloudinaryImageId}
           className="h-20 w-20 rounded-full xl:mr-2"
        alt="" />
