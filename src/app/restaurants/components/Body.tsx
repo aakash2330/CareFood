@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import RestaurantCards from "./RestaurantCards";
 import { Search } from "lucide-react";
 import Shimmer from "./Shimmer";
+import Link from "next/link";
 
 type filterDataProps =  {
   searchInput : string,
@@ -38,12 +39,12 @@ function Body() {
         setFilteredRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
 
       }
-console.log(restaurants)
+
   
 return restaurants?.length === 0 ? (
     <Shimmer />
   ) : (
-    <div className="flex justify-between flex-col items-center mx-44">
+    <div className="flex justify-between flex-col mt-24 items-center mx-44">
        <img src="https://b.zmtcdn.com/web_assets/81f3ff974d82520780078ba1cfbd453a1583259680.png" alt="s" className="h-[500px] w-[1200px] object-cover "/>
        <div className="flex absolute top-80">
        <input
@@ -127,15 +128,18 @@ return restaurants?.length === 0 ? (
         </button>
       
        </div>
-       <div className="bg-gray-300 mt-3 h-[1px] w-full"></div>
-       <div className="flex flex-wrap xl:gap-x-10 lg:justify-center ">
+       <div className="bg-gray-300 mt-4 h-[1px] w-full"></div>
+       <div className="flex flex-wrap mt-2  gap-x-1 justify-center">
       {
         filteredRestaurants?.map((restaurant, index) => {
             return (
-                <>
-              
+              <Link
+              key={restaurant.info.id}
+              href={"/restaurants/" + restaurant.info.id} 
+              className=" "
+            >
                 <RestaurantCards searchInput={searchChange} restaurant={restaurant} />
-                </>
+                </Link>
             )
         })
       }
