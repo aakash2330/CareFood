@@ -13,7 +13,17 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Breadcrumb,  BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/lib/cartSlice";
+import MenuShimmer from "./components/MenuShimmer";
 interface PageProps {
   id: string;
 }
@@ -22,6 +32,7 @@ const Page = ({ params }: { params: PageProps }) => {
   const [restaurantMenu, setRestaurantMenu] = useState<any>({});
   const [menu, setMenu] = useState({});
   const [category, setCategory] = useState({});
+  const dispatch = useDispatch();
   useEffect(() => {
     getRestaurantInfo();
   }, []);
@@ -52,26 +63,30 @@ const Page = ({ params }: { params: PageProps }) => {
       );
     setCategory(cat);
   }
-  console.log(restaurantMenu);
+  function handleAddToCart(item: any) {
+    dispatch(addToCart(item))
+  }
 
-  return (
-    <><Breadcrumb className="text-black pt-28 mb-3 mx-72">
-      <BreadcrumbList>
-        <BreadcrumbItem>
-          <BreadcrumbLink href="/">Home</BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <BreadcrumbLink href="/restaurants">Restaurants</BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <BreadcrumbPage>{restaurantMenu.name}</BreadcrumbPage>
-        </BreadcrumbItem>
-      </BreadcrumbList>
-    </Breadcrumb>
-    
-    <div className="flex  justify-center  flex-col mx-72  ">
+
+  return menu != undefined && Object.keys(menu).length === 0 ?  <MenuShimmer /> : (
+    <>
+      <Breadcrumb className="text-black pt-28 mb-3 mx-72">
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/">Home</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/restaurants">Restaurants</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>{restaurantMenu.name}</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+
+      <div className="flex  justify-center  flex-col mx-72  ">
         <div className="flex justify-between ">
           <div className="flex flex-col mt-11 min-w-[500px] text-[#515151]">
             <div className=" text-4xl font-bold tracking-wider ">
@@ -91,24 +106,26 @@ const Page = ({ params }: { params: PageProps }) => {
               <Image src={star} alt="Star" className="h-5 w-5 mt-[3px] " />
               <div>{restaurantMenu.avgRatingString}</div>
               <div className="mx-1 -mt-1 font-bold">.</div>{" "}
-              <Image src={delBike} alt="Star" className="h-5 w-5 mt-[4px] mr-1" />
+              <Image
+                src={delBike}
+                alt="Star"
+                className="h-5 w-5 mt-[4px] mr-1"
+              />
               <div>{restaurantMenu?.sla?.lastMileTravelString}</div>
-
             </div>
 
-
-
             <div className="text-xs mt-16 tracking-wide font-semibold">
-              *₹{restaurantMenu?.feeDetails?.totalFee / 100} Delivery Fee will be
-              applied
+              *₹{restaurantMenu?.feeDetails?.totalFee / 100} Delivery Fee will
+              be applied
             </div>
           </div>
           <Image
             src={menuHouse}
-            className="h-[350px] -ml-6  -mt-8 w-[510px] "
-            alt="" />
+            className="h-[380px] -ml-6  -mt-8 w-[480px] "
+            alt=""
+          />
         </div>
-        <div className="bg-[#5F5F5F47] h-[2px] w-[940px] mb-8  mx-auto"></div>
+        <div className="bg-[#5F5F5F47] h-[2px] w-[940px] -mt-4  mb-8  mx-auto"></div>
         <Accordion type="single" collapsible className="w-full ">
           {category &&
             Object.values(category).map((cat: any, index) => (
@@ -127,12 +144,14 @@ const Page = ({ params }: { params: PageProps }) => {
                           <Image
                             src={veg}
                             alt="Veg Sign"
-                            className="absolute left-5 top-4 h-6 w-6 " />
+                            className="absolute left-5 top-4 h-6 w-6 "
+                          />
                         ) : (
                           <Image
                             src={nonveg}
                             alt="Non Veg Sign"
-                            className="absolute left-5 top-4 h-6 w-6 " />
+                            className="absolute left-5 top-4 h-6 w-6 "
+                          />
                         )}
                         <div className="flex justify-between pr-2 ">
                           <div className="flex flex-col overflow-x-hidden  max-w-[60%] text-[#5F5F5F]">
@@ -157,10 +176,13 @@ const Page = ({ params }: { params: PageProps }) => {
                                     <Image
                                       src={star}
                                       alt="Star"
-                                      className="h-5 w-5 mt-[3px]" />
+                                      className="h-5 w-5 mt-[3px]"
+                                    />
                                     <div className=" ">
-                                      {item?.card?.info?.ratings
-                                        ?.aggregatedRating?.rating}
+                                      {
+                                        item?.card?.info?.ratings
+                                          ?.aggregatedRating?.rating
+                                      }
                                     </div>
                                   </div>
                                 ) : (
@@ -174,13 +196,16 @@ const Page = ({ params }: { params: PageProps }) => {
                           </div>
                           <div className="flex flex-col relative">
                             <Image
-                              src={"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_208,h_208,c_fit/" +
-                                item.card.info.imageId}
+                              src={
+                                "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_208,h_208,c_fit/" +
+                                item.card.info.imageId
+                              }
                               className="mr-10 h-36 w-[156px]  rounded-xl -mt-4"
                               height={144}
                               width={150}
-                              alt="image" />
-                            <div className="w-28 h-11 absolute -bottom-5 cursor-pointer left-5 flex justify-center items-center bg-[#FCFCFC] rounded-lg hover:bg-gray-300   text-[#1ba672] text-lg font-extrabold   border">
+                              alt="image"
+                            />
+                            <div className="w-28 h-11 absolute -bottom-5 cursor-pointer left-5 flex justify-center items-center bg-[#FCFCFC] rounded-lg hover:bg-gray-300   text-[#1ba672] text-lg font-extrabold   border" onClick={() => handleAddToCart(item)}>
                               ADD
                             </div>
                           </div>
@@ -193,7 +218,7 @@ const Page = ({ params }: { params: PageProps }) => {
             ))}
         </Accordion>
       </div>
-      </>
+    </>
   );
 };
 
