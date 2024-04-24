@@ -2,7 +2,7 @@
 
 import { getLocation } from "@/lib/locationSlice";
 import { LocateIcon, MapPin } from "lucide-react";
-import { SetStateAction, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 function Sidebar() {
@@ -10,6 +10,10 @@ function Sidebar() {
   const [SearchText, setSearchText] = useState<any>("");
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+  
+}, [dispatch]);
 
   const handleSearchLocation = async (e: {
     target: { value: SetStateAction<string> };

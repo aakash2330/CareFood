@@ -2,8 +2,8 @@
 
 function Page() {
   return (
-    <div className="text-black text-center pt-28">
-      sdss
+    <div className="bg-[#38DB4A] h-[400px] w-[400px] mx-auto   pt-28">
+   
     </div>
   )
 }

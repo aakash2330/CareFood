@@ -1,10 +1,13 @@
+
 import { createSlice } from "@reduxjs/toolkit";
+
+const initialState = {
+    userLocation: null,
+};
 
 const locationSlice = createSlice({
     name: "location",
-    initialState: {
-        userLocation: null || JSON.parse(localStorage.getItem("userLocation")!)
-    },
+    initialState,
     reducers: {
         getLocation: (state, action) => {
             state.userLocation = action.payload;

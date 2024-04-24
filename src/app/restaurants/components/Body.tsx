@@ -6,7 +6,8 @@ import RestaurantCards from "./RestaurantCards";
 import { Search } from "lucide-react";
 import Shimmer from "./Shimmer";
 import Link from "next/link";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getLocation } from "@/lib/locationSlice";
 
 type filterDataProps =  {
   searchInput : string,
@@ -19,7 +20,7 @@ function Body() {
     const [restaurants, setRestaurants] = useState([]);
     const [searchChange, setSearchChange] = useState("")
     const userLocation = useSelector((store:any)  => store.location.userLocation )
-
+    const dispatch = useDispatch();
     const lat = userLocation?.lat ? userLocation?.lat : 23.02760
     const lng = userLocation?.lng ? userLocation?.lng : 72.58710
     function filterData(searchInput: string, restaurants: any[]) {
@@ -29,7 +30,15 @@ function Body() {
       );
     }
     useEffect(() => {
+             // Check if localStorage is available before accessing it
+    if (typeof window !== "undefined" && localStorage.getItem("userLocation")) {
+      // Retrieve the user location from localStorage
+      const storedUserLocation = JSON.parse(localStorage.getItem("userLocation")!);
+      // Dispatch the getLocation action to initialize the Redux state
+      dispatch(getLocation(storedUserLocation));
+  }
         getRestaurants();
+   
       }, [lat, lng]);
     
       async function getRestaurants() {
