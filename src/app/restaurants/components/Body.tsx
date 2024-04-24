@@ -6,6 +6,7 @@ import RestaurantCards from "./RestaurantCards";
 import { Search } from "lucide-react";
 import Shimmer from "./Shimmer";
 import Link from "next/link";
+import { useSelector } from "react-redux";
 
 type filterDataProps =  {
   searchInput : string,
@@ -17,6 +18,10 @@ function Body() {
     const [filteredRestaurants, setFilteredRestaurants] = useState<any[]>([]);
     const [restaurants, setRestaurants] = useState([]);
     const [searchChange, setSearchChange] = useState("")
+    const userLocation = useSelector((store:any)  => store.location.userLocation )
+
+    const lat = userLocation?.lat ? userLocation?.lat : 23.02760
+    const lng = userLocation?.lng ? userLocation?.lng : 72.58710
     function filterData(searchInput: string, restaurants: any[]) {
   setSearchChange(searchInput)
       return restaurants?.filter((restaurant) =>
@@ -25,11 +30,11 @@ function Body() {
     }
     useEffect(() => {
         getRestaurants();
-      }, []);
+      }, [lat, lng]);
     
       async function getRestaurants() {
      
-        const data = await fetch(process.env.BASE_URL + "api/proxy/swiggy/dapi/restaurants/list/v5?lat=23.02760&lng=72.58710&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+        const data = await fetch(process.env.BASE_URL + `api/proxy/swiggy/dapi/restaurants/list/v5?lat=${lat}&lng=${lng}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`);
       
         const json = await data.json();
    
