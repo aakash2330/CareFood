@@ -5,6 +5,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/navbar/Navbar";
 import ReduxProvider from "./reduxWrapper/redux-provider";
+import { Toaster } from "react-hot-toast";
 
 
 const poppins = Poppins({
@@ -29,6 +30,7 @@ export default function RootLayout({
       <ReduxProvider>
         <Navbar />
         {children}
+        <Toaster position="bottom-right" />
         </ReduxProvider></body>
     
     </html>

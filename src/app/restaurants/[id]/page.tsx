@@ -21,9 +21,10 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "@/lib/cartSlice";
 import MenuShimmer from "./components/MenuShimmer";
+import toast from "react-hot-toast";
 interface PageProps {
   id: string;
 }
@@ -32,6 +33,7 @@ const Page = ({ params }: { params: PageProps }) => {
   const [restaurantMenu, setRestaurantMenu] = useState<any>({});
   const [menu, setMenu] = useState({});
   const [category, setCategory] = useState({});
+  const cartItems = useSelector((state: any) => state.cart.items);
   const dispatch = useDispatch();
   useEffect(() => {
     getRestaurantInfo();
@@ -64,7 +66,13 @@ const Page = ({ params }: { params: PageProps }) => {
     setCategory(cat);
   }
   function handleAddToCart(item: any) {
+    const isItemInCart = cartItems.some((cartItem: { id: any; }) => cartItem?.id === item?.card?.info?.id);
+
+    if(isItemInCart){
+      toast.error('Already added to the Cart');
+    }
     dispatch(addToCart(item))
+    toast.success('Successfully Added to Cart!');
   }
 
 
