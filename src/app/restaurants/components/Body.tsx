@@ -21,8 +21,8 @@ function Body() {
     const [searchChange, setSearchChange] = useState("")
     const userLocation = useSelector((store:any)  => store.location.userLocation )
     const dispatch = useDispatch();
-    const lat = userLocation?.lat ? userLocation?.lat : 23.02760
-    const lng = userLocation?.lng ? userLocation?.lng : 72.58710
+    const lat = userLocation?.lat ? userLocation?.lat : 19.0759837
+    const lng = userLocation?.lng ? userLocation?.lng : 72.8776559
     function filterData(searchInput: string, restaurants: any[]) {
   setSearchChange(searchInput)
       return restaurants?.filter((restaurant) =>
@@ -30,14 +30,16 @@ function Body() {
       );
     }
     useEffect(() => {
+
              // Check if localStorage is available before accessing it
     if (typeof window !== "undefined" && localStorage.getItem("userLocation")) {
       // Retrieve the user location from localStorage
       const storedUserLocation = JSON.parse(localStorage.getItem("userLocation")!);
       // Dispatch the getLocation action to initialize the Redux state
       dispatch(getLocation(storedUserLocation));
+
   }
-        getRestaurants();
+            getRestaurants(); 
    
       }, [lat, lng]);
     
@@ -54,7 +56,7 @@ function Body() {
 
       }
 
-  
+  console.log(restaurants)
 return restaurants?.length === 0 ? (
     <Shimmer />
   ) : (

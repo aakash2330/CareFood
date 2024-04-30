@@ -4,7 +4,7 @@ import Questions from "./components/Questions"
 function Page() {
   return (
     <div className=" pt-28">
-    <div className="bg-[#e0ffe4] h-[800px] w-[1200px] rounded-3xl mt-7 mx-auto pt-24 gap-x-20  flex px-20">
+    <div className="bg-[#e0ffe4] h-[750px] w-[1200px] rounded-3xl mt-7 mb-10  mx-auto pt-24 gap-x-20  flex px-20">
         <div className="flex flex-col gap-y-5 max-w-[350px]" >
             <div className="text-sm font-semibold text-[#666]">ANSWERS TO </div>
             <div className="font-semibold text-4xl font-serif">Frequently Asked Questions</div>

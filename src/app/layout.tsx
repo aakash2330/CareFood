@@ -6,6 +6,7 @@ import "./globals.css";
 import Navbar from "./components/navbar/Navbar";
 import ReduxProvider from "./reduxWrapper/redux-provider";
 import { Toaster } from "react-hot-toast";
+import Footer from "./components/footer/Footer";
 
 
 const poppins = Poppins({
@@ -30,6 +31,7 @@ export default function RootLayout({
       <ReduxProvider>
         <Navbar />
         {children}
+        <Footer />
         <Toaster position="bottom-right" />
         </ReduxProvider></body>
     

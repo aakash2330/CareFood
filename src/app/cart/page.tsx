@@ -29,8 +29,8 @@ function Page() {
 
   const calculateSubTotal = () => {
     let sub = 0;
-    cartItems.map((item: { card: { info: { defaultPrice: number; }; }; }) => {
-     sub += item.card.info.defaultPrice  
+    cartItems.map((item: { card: { info: { defaultPrice: number; price: number; }; }; }) => {
+      item.card.info.defaultPrice ?  sub += item.card.info.defaultPrice : sub += item.card.info.price  
     })
     return sub/100;
   }
@@ -44,7 +44,7 @@ function Page() {
   };
   console.log(cartItems);
   return (
-    <div className="flex flex-col justify-center items-center pt-40">
+    <div className="flex flex-col justify-center items-center pt-40 mb-40">
       <div className="text-black">cart</div>
       {cartItems.map((cartItem: any, index: number) => (
         <div key={index} className="flex flex-col gap-x-4">
@@ -72,7 +72,7 @@ function Page() {
             </div>
             <h4 className="py-1 text-black text-lg font-bold mt-20 ml-32 w-[30]">
               {" "}
-              ₹{cartItem.card.info.defaultPrice / 100}
+            {cartItem.card.info.price ? (`₹ ${cartItem.card.info.price / 100}`) : ( `₹ ${cartItem.card.info.defaultPrice / 100}` )}
             </h4>
             <button
               className="flex h-fit mt-20 ml-12 rounded-full text-black p-3 bg-[#65d453]  hover:bg-[#70ea5c]"
