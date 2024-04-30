@@ -5,7 +5,14 @@ const nextConfig = {
 
 },
 images: {
-  domains: ['media-assets.swiggy.com'],
+  domains: ['media-assets.swiggy.com',],
+  remotePatterns: [
+  
+    {
+      protocol: "https",
+      hostname: "lh3.googleusercontent.com",
+    },
+  ],
 },
 };
 

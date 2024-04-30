@@ -75,7 +75,7 @@ const Page = ({ params }: { params: PageProps }) => {
     toast.success('Successfully Added to Cart!');
   }
 
-
+  
   return menu != undefined && Object.keys(menu).length === 0 ?  <MenuShimmer /> : (
     <>
       <Breadcrumb className="text-black pt-28 mb-3 mx-72">
