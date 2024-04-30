@@ -30,7 +30,7 @@ function Page() {
     let sub = 0;
     cartItems.map((item: any) => {
       const donationQty: number = item.card.info.donationQuantity ? item.card.info.donationQuantity + 1 : 1
-      item.card.info.defaultPrice ? sub += item.card.info.defaultPrice * donationQty ?? 1 : sub += item.card.info.price * donationQty ?? 1
+      item.card.info.defaultPrice ? sub += item.card.info.defaultPrice * donationQty : sub += item.card.info.price * donationQty
     })
     return sub / 100;
   }
@@ -73,14 +73,18 @@ function Page() {
             <h4 className="py-1 text-black text-lg font-bold mt-20 ml-32 w-[30]">
               <div className="text-center">Donate</div>
               <div className="flex justify-center items-center gap-2">
-                <Button onClick={() => {
-                  dispatch(changeDonationQuantity({ donationQuantity: cartItem.card.info.donationQuantity != undefined ? cartItem.card.info.donationQuantity - 1 : 0, id: cartItem.card.info.id }))
+                <Button className="bg-[#f6f6f6] hover:text-white text-black" onClick={() => {
+                  dispatch(changeDonationQuantity({
+                    donationQuantity: cartItem.card.info.donationQuantity != undefined ? cartItem.card.info.donationQuantity - 1 : 0, id: cartItem.card.info.id
+                  }))
                 }}>
                   -
                 </Button>
                 <div>{cartItem.card.info.donationQuantity ?? 0}</div>
-                <Button onClick={() => {
-                  dispatch(changeDonationQuantity({ donationQuantity: cartItem.card.info.donationQuantity != undefined ? cartItem.card.info.donationQuantity + 1 : 1, id: cartItem.card.info.id }))
+                <Button className="bg-[#f6f6f6] hover:text-white text-black" onClick={() => {
+                  dispatch(changeDonationQuantity({
+                    donationQuantity: cartItem.card.info.donationQuantity != undefined ? cartItem.card.info.donationQuantity + 1 : 1, id: cartItem.card.info.id
+                  }))
                 }}>
                   +
                 </Button>

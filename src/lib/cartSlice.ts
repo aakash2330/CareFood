@@ -14,12 +14,13 @@ const cartSlice = createSlice({
         },
         removeFromCart(state: { items: any[] }, action) {
             const itemId = action.payload;
-            state.items = state.items.filter(item => item?.id !== itemId)
+            state.items = state.items.filter(item => item?.card.info.id !== itemId)
         },
     changeDonationQuantity(state: { items: any[] }, action){
-      console.log(state.items,action.payload)
-      console.log({updatedState : state.items.map((item)=>{return item.card.info.id==action.payload.id ? {...item,donationQuantity:action.payload.donationQuantity}:item})})
-      state.items=state.items.map((item)=>{return item.card.info.id==action.payload.id ? {...item,card:{...item.card , info:{...item.card.info,donationQuantity:action.payload.donationQuantity}}}:item})
+      state.items=state.items.map(
+        (item)=>{
+          return item.card.info.id==action.payload.id 
+            ? {...item,card:{...item.card , info:{...item.card.info,donationQuantity:action.payload.donationQuantity}}}:item})
     }
     }
 })
