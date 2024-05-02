@@ -1,7 +1,12 @@
 "use client";
 
-import { LoginLink, LogoutLink, useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import {
+  LoginLink,
+  LogoutLink,
+  useKindeBrowserClient,
+} from "@kinde-oss/kinde-auth-nextjs";
 import Image from "next/image";
+import DropDownAccountMenu from "./AccountDropDown";
 function Authenticate() {
   const { user, isAuthenticated, isLoading } = useKindeBrowserClient();
   return (
@@ -17,13 +22,13 @@ function Authenticate() {
         </>
       ) : (
         <>
-         {
+          {
             // tailwind css loading spinner
-            isLoading  && (
+            isLoading && (
               <div className="animate-spin rounded-full h-7 w-7 border-b-2 border-white/50 mx-auto my-2"></div>
             )
           }
-         {user?.picture && (
+          {user?.picture && (
             <Image
               src={user?.picture}
               alt="Profile picture"
@@ -31,17 +36,18 @@ function Authenticate() {
               height={40}
               className="rounded-full  my-2"
             />
-     
           )}
           {user && !user.picture && (
             <div className="h-7 w-7 rounded-full mx-auto my-2 bg-zinc-800 text-xs flex justify-center items-center">
               {user?.given_name?.[0]}
             </div>
           )}
-        <div className="text-[#343434] mt-4  font-medium text-lg ">
-          {user?.given_name}
-        </div>
-        {isAuthenticated && (
+          <div className="text-[#343434] mt-4  font-medium text-lg ">
+            <DropDownAccountMenu
+              name={user?.given_name ?? "User"}
+            ></DropDownAccountMenu>
+          </div>
+          {isAuthenticated && (
             <LogoutLink
               className={` px-5 text-center h-10 pt-2   mt-2 hover:bg-[#70EA5C] rounded-3xl w-[90%] transition inline-block`}
             >
