@@ -25,11 +25,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "@/lib/cartSlice";
 import MenuShimmer from "./components/MenuShimmer";
 import toast from "react-hot-toast";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import { redirect } from "next/navigation";
 interface PageProps {
   id: string;
 }
 
 const Page = ({ params }: { params: PageProps }) => {
+  const { user } = useKindeBrowserClient();
   const [restaurantMenu, setRestaurantMenu] = useState<any>({});
   const [menu, setMenu] = useState({});
   const [category, setCategory] = useState({});
@@ -43,7 +46,7 @@ const Page = ({ params }: { params: PageProps }) => {
     const data = await fetch(
       process.env.BASE_URL +
         "api/proxy/swiggy/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=23.022505&lng=72.5713621&restaurantId=" +
-        params.id
+        params.id,
     );
 
     if (!data.ok)
@@ -54,29 +57,32 @@ const Page = ({ params }: { params: PageProps }) => {
     // console.log(json.data?.cards[2]?.card?.card?.info);
     setMenu(
       json?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card
-        ?.card?.itemCards
+        ?.card?.itemCards,
     );
 
     const cat =
       await json?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
         (c: { card: { card: { [x: string]: string } } }) =>
           c?.card?.card?.["@type"] ==
-          "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+          "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory",
       );
     setCategory(cat);
   }
   function handleAddToCart(item: any) {
-    const isItemInCart = cartItems.some((cartItem: { id: any; }) => cartItem?.id === item?.card?.info?.id);
+    const isItemInCart = cartItems.some(
+      (cartItem: { id: any }) => cartItem?.id === item?.card?.info?.id,
+    );
 
-    if(isItemInCart){
-      toast.error('Already added to the Cart');
+    if (isItemInCart) {
+      toast.error("Already added to the Cart");
     }
-    dispatch(addToCart(item))
-    toast.success('Successfully Added to Cart!');
+    dispatch(addToCart(item));
+    toast.success("Successfully Added to Cart!");
   }
 
-  
-  return menu != undefined && Object.keys(menu).length === 0 ?  <MenuShimmer /> : (
+  return menu != undefined && Object.keys(menu).length === 0 ? (
+    <MenuShimmer />
+  ) : (
     <>
       <Breadcrumb className="text-black pt-28 mb-3 mx-72">
         <BreadcrumbList>
@@ -213,13 +219,20 @@ const Page = ({ params }: { params: PageProps }) => {
                               width={150}
                               alt="image"
                             />
-                            <div className="w-28 h-11 absolute -bottom-5 cursor-pointer left-5 flex justify-center items-center bg-[#FCFCFC] rounded-lg hover:bg-gray-300   text-[#1ba672] text-lg font-extrabold   border" onClick={() => handleAddToCart(item)}>
+                            <div
+                              className="w-28 h-11 absolute -bottom-5 cursor-pointer left-5 flex justify-center items-center bg-[#FCFCFC] rounded-lg hover:bg-gray-300   text-[#1ba672] text-lg font-extrabold   border"
+                              onClick={() => {
+                                user
+                                  ? handleAddToCart(item)
+                                  : (window.location.href = "/api/auth/login");
+                              }}
+                            >
                               ADD
                             </div>
                           </div>
                         </div>
                       </div>
-                    )
+                    ),
                   )}
                 </AccordionContent>
               </AccordionItem>

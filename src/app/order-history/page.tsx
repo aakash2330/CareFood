@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import axios from "axios";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import OrderHistory from "../components/order/history/OrderHistoryPage";

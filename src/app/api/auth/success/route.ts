@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { PrismaClient } from "@prisma/client";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { NextResponse } from "next/server";
@@ -12,7 +13,7 @@ export async function GET() {
     throw new Error("something went wrong with authentication" + user);
 
   let dbUser = await prisma.user.findUnique({
-    where: { kindeId: user.id }
+    where: { kindeId: user.id },
   });
 
   if (!dbUser) {
@@ -21,8 +22,8 @@ export async function GET() {
         kindeId: user.id,
         firstName: user.given_name ?? "",
         lastName: user.family_name ?? "",
-        email: user.email ?? "" // Using nullish coalescing operator to provide a default empty string value
-      }
+        email: user.email ?? "", // Using nullish coalescing operator to provide a default empty string value
+      },
     });
   }
 
